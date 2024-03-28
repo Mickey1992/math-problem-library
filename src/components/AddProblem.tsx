@@ -34,15 +34,6 @@ export default function AddProblem() {
         `
 		: undefined;
 
-	` document.body.addEventListener("click", function () { \n
-            let html = document.querySelector(".element-question[data-index=\\"${questionNo}\\"]").outerHTML; \n 
-            navigator.clipboard.writeText(html)；`;
-
-	`document.body.addEventListener("click", function () {
-		let html = document.querySelector(".element-question[data-index=\\"${questionNo}\\"]").outerHTML;
-		navigator.clipboard.writeText(html);
-	});`;
-
 	return (
 		<>
 			<div>
