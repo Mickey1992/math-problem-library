@@ -21,33 +21,35 @@ function removeAttributes(element: Element) {
 
 async function extractImages(element: Element) {
 	const imgNodes = Array.from(element.querySelectorAll("p > img"));
-	const imgNames: string[] = [];
+	const imgUrls: string[] = [];
 
 	imgNodes.forEach(async (imgNode) => {
-		imgNames.push((await saveImage(imgNode)) as string);
+		imgUrls.push((await saveImage(imgNode)) as string);
 		imgNode!.parentNode!.removeChild(imgNode);
 	});
-	return imgNames;
+	return imgUrls;
 }
 
 async function saveImage(imageNode: Element) {
 	const imageUrl = imageNode.getAttribute("src");
 
 	//download Image
-	return await downloadImage(imageUrl!);
+	await downloadImage(imageUrl!);
+	return imageUrl;
 }
 async function downloadImage(imageUrl: string) {
+	const response = await fetch(imageUrl);
+	const blob = await response.blob();
+	const url = URL.createObjectURL(blob);
+	const link = document.createElement("a");
+	link.href = url;
 	const imageName = imageUrl.split("/").slice(-1).toString();
-	const outputFolder = "public" + "/";
-	const outputFileName = outputFolder + imageName;
+	link.download = imageName;
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
 
-	return new Promise((resolve, reject) => {
-		https.get(imageUrl, (res) => {
-			res.pipe(fs.createWriteStream(outputFileName))
-				.on("error", reject)
-				.once("close", resolve);
-		});
-	});
+	return imageName;
 }
 
 function structureProblem(problem: Element) {
