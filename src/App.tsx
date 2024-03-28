@@ -1,3 +1,4 @@
+import AddProblem from "./components/AddProblem";
 import Problem from "./components/Problem";
 import ProblemList from "./components/ProblemList";
 
@@ -39,8 +40,9 @@ const MATH_PROBLEMS = [
 function App() {
 	return (
 		<div>
-			<Problem {...MATH_PROBLEMS[0]} />
+			{/* <Problem {...MATH_PROBLEMS[0]} /> */}
 			{/* <ProblemList problems={MATH_PROBLEMS} /> */}
+			<AddProblem />
 		</div>
 	);
 }
