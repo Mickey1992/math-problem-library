@@ -50,34 +50,6 @@ async function downloadImage(imageUrl: string) {
 	});
 }
 
-// async function downloafImage(imageUrl) {
-// 	const fileName = imageUrl.split("/").slice(-1).toString();
-
-// 	// 使用fetch获取图片
-// 	await fetch(imageUrl)
-// 		.then((response) => response.blob())
-// 		.then((blob) => {
-// 			// 创建一个临时的URL指向图片
-// 			const objectUrl = URL.createObjectURL(blob);
-
-// 			// 创建一个临时的<a>标签用于下载
-// 			const downloadLink = document.createElement("a");
-// 			downloadLink.href = objectUrl;
-// 			downloadLink.download = fileName; // 指定下载文件名
-// 			document.body.appendChild(downloadLink);
-
-// 			// 触发下载
-// 			downloadLink.click();
-
-// 			// 清理临时的URL和<a>标签
-// 			document.body.removeChild(downloadLink);
-// 			URL.revokeObjectURL(objectUrl);
-// 		})
-// 		.catch((error) => console.error("下载失败:", error));
-
-// 	return fileName;
-// }
-
 function structureProblem(problem: Element) {
 	const description = problem.querySelector("div.talqs_content");
 	if (description) {
@@ -123,23 +95,6 @@ export async function getJsonMathProblem(
 
 	// saveImages
 	const images = await extractImages(question);
-
-	// 题干
-	// const mainQuestion = question.querySelector(".talqs_content");
-	// levelUpMathElement(mainQuestion);
-	// removeAttributes(mainQuestion);
-
-	// 子问
-	// let subQuestions = question
-	// 	.querySelector("div.talqs_subqs")
-	//	.querySelectorAll(".talqs_main>div");
-
-	// let subQuestions = question.querySelector("div.talqs_subqs").children;
-
-	// subQuestions.forEach((subQuestion) => {
-	//	levelUpMathElement(subQuestion);
-	//	removeAttributes(subQuestion);
-	// });
 
 	// 题目
 	const problem = structureProblem(
