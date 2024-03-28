@@ -7,9 +7,12 @@ import ProblemList from "./components/ProblemList";
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <ProblemList />,
-		loader: ProblemList.loader,
 		children: [
+			{
+				index: true,
+				element: <ProblemList />,
+				loader: ProblemList.loader,
+			},
 			{ path: "add", element: <AddProblem />, action: AddProblem.action },
 			{
 				path: "problem/:id",
