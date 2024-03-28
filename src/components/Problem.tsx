@@ -1,10 +1,10 @@
-import ProblemText, { ProblemHTML } from "./ProblemText";
+import ProblemText, { StructuredProblemHTML } from "./ProblemText";
 import ProblemTitle from "./ProblemTitle";
 
 export interface ProblemProps {
 	from: string;
 	questionNo: number;
-	problem: ProblemHTML;
+	problem: StructuredProblemHTML;
 	images: string[];
 }
 

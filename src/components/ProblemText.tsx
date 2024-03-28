@@ -1,9 +1,12 @@
-export interface ProblemHTML {
+export interface StructuredProblemHTML {
 	description: string;
-	questions: ProblemHTML[];
+	questions: StructuredProblemHTML[];
 }
 
-export default function ProblemText({ description, questions }: ProblemHTML) {
+export default function ProblemText({
+	description,
+	questions,
+}: StructuredProblemHTML) {
 	return (
 		<>
 			<div dangerouslySetInnerHTML={{ __html: description }}></div>

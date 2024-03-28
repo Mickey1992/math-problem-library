@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { Form, redirect } from "react-router-dom";
 
+import { getJsonMathProblem } from "../utils/problem";
+
 export default function AddProblem() {
 	const [questionNo, setQuestionNo] = useState("");
 
@@ -9,7 +11,7 @@ export default function AddProblem() {
 	function handleQuestionNoChange(
 		event: React.ChangeEvent<HTMLInputElement>
 	) {
-		clearTimeout(setTimeoutRef.current as number);
+		clearTimeout(setTimeoutRef.current);
 		setTimeoutRef.current = setTimeout(() => {
 			console.log(`questionNo: ${event.target.value}`);
 			setTimeoutRef.current = undefined;
@@ -36,32 +38,37 @@ export default function AddProblem() {
 		: undefined;
 
 	return (
-		<>
+		<Form method="PUT">
 			<div>
 				<label>Question No: </label>
 				<input
+					name="questionNo"
 					type="number"
 					onChange={handleQuestionNoChange}
 					placeholder="please input the question no. here"
 				/>
 				{extractCode && <pre>{extractCode}</pre>}
-				<button onClick={handleCopy}>Copy</button>
+				<button onClick={handleCopy} type="button">
+					Copy
+				</button>
 			</div>
 
 			<div>
-				<Form method="PUT">
-					<textarea name="problem-html" />
-					<button>Submit</button>
-				</Form>
+				<textarea name="problem-html" />
+				<button>Submit</button>
 			</div>
-		</>
+		</Form>
 	);
 }
 
 export async function addProblemAction({ request }) {
 	const data = await request.formData();
-	const html = data.get("problem-html");
-	console.log(html);
+
+	const jsonProblem = await getJsonMathProblem(
+		data.get("problem-html"),
+		data.get("questionNo")
+	);
+	console.log(JSON.stringify(jsonProblem));
 
 	return redirect("/");
 }
