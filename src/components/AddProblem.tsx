@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Form, redirect } from "react-router-dom";
 
 import { getJsonMathProblem } from "../utils/problem";
+import localforage from "localforage";
 
 export default function AddProblem() {
 	const [questionNo, setQuestionNo] = useState("");
@@ -68,7 +69,11 @@ export async function addProblemAction({ request }) {
 		data.get("problem-html"),
 		data.get("questionNo")
 	);
-	console.log(JSON.stringify(jsonProblem));
+
+	const index = `${jsonProblem.from}-${jsonProblem.questionNo}`;
+	localforage.setItem(index, jsonProblem);
+
+	console.log(JSON.stringify(await localforage.getItem(index)));
 
 	return redirect("/");
 }

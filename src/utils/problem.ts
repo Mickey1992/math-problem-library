@@ -21,36 +21,47 @@ function removeAttributes(element: Element) {
 
 async function extractImages(element: Element) {
 	const imgNodes = Array.from(element.querySelectorAll("p > img"));
-	const imgUrls: string[] = [];
+	const images: ArrayBuffer[] = [];
 
 	imgNodes.forEach(async (imgNode) => {
-		imgUrls.push((await saveImage(imgNode)) as string);
+		const arrayBuffer = await imageToBlob(imgNode);
+		images.push(arrayBuffer);
 		imgNode!.parentNode!.removeChild(imgNode);
 	});
-	return imgUrls;
+	return images;
 }
 
-async function saveImage(imageNode: Element) {
+async function imageToBlob(imageNode: Element): Promise<ArrayBuffer> {
 	const imageUrl = imageNode.getAttribute("src");
 
-	//download Image
-	await downloadImage(imageUrl!);
-	return imageUrl;
-}
-async function downloadImage(imageUrl: string) {
-	const response = await fetch(imageUrl);
+	const response = await fetch(imageUrl!);
 	const blob = await response.blob();
-	const url = URL.createObjectURL(blob);
-	const link = document.createElement("a");
-	link.href = url;
-	const imageName = imageUrl.split("/").slice(-1).toString();
-	link.download = imageName;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
+	const arrayBuffer = await new Response(blob).arrayBuffer();
 
-	return imageName;
+	return arrayBuffer;
 }
+
+// async function saveImage(imageNode: Element) {
+// 	const imageUrl = imageNode.getAttribute("src");
+
+// 	//download Image
+// 	await downloadImage(imageUrl!);
+// 	return imageUrl;
+// }
+// async function downloadImage(imageUrl: string) {
+// 	const response = await fetch(imageUrl);
+// 	const blob = await response.blob();
+// 	const url = URL.createObjectURL(blob);
+// 	const link = document.createElement("a");
+// 	link.href = url;
+// 	const imageName = imageUrl.split("/").slice(-1).toString();
+// 	link.download = imageName;
+// 	document.body.appendChild(link);
+// 	link.click();
+// 	document.body.removeChild(link);
+
+// 	return imageName;
+// }
 
 function structureProblem(problem: Element) {
 	const description = problem.querySelector("div.talqs_content");
