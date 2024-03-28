@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Form, redirect } from "react-router-dom";
 
 export default function AddProblem() {
 	const [questionNo, setQuestionNo] = useState("");
@@ -48,8 +49,19 @@ export default function AddProblem() {
 			</div>
 
 			<div>
-				<textarea />
+				<Form method="PUT">
+					<textarea name="problem-html" />
+					<button>Submit</button>
+				</Form>
 			</div>
 		</>
 	);
+}
+
+export async function addProblemAction({ request }) {
+	const data = await request.formData();
+	const html = data.get("problem-html");
+	console.log(html);
+
+	return redirect("/");
 }

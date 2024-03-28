@@ -1,6 +1,8 @@
-import AddProblem from "./components/AddProblem";
+import AddProblem, { addProblemAction } from "./components/AddProblem";
 import Problem from "./components/Problem";
 import ProblemList from "./components/ProblemList";
+
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const MATH_PROBLEMS = [
 	{
@@ -37,14 +39,15 @@ const MATH_PROBLEMS = [
 	},
 ];
 
+const router = createBrowserRouter([
+	{
+		index: true,
+		element: <AddProblem />,
+		action: addProblemAction,
+	},
+]);
 function App() {
-	return (
-		<div>
-			{/* <Problem {...MATH_PROBLEMS[0]} /> */}
-			{/* <ProblemList problems={MATH_PROBLEMS} /> */}
-			<AddProblem />
-		</div>
-	);
+	return <RouterProvider router={router} />;
 }
 
 export default App;
