@@ -7,7 +7,7 @@ import localforage from "localforage";
 export default function AddProblem() {
 	const [questionNo, setQuestionNo] = useState("");
 
-	const setTimeoutRef = useRef<number | undefined>(undefined);
+	const setTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
 	function handleQuestionNoChange(
 		event: React.ChangeEvent<HTMLInputElement>
@@ -62,7 +62,7 @@ export default function AddProblem() {
 	);
 }
 
-export async function addProblemAction({ request }) {
+AddProblem.action = async ({ request }) => {
 	const data = await request.formData();
 
 	const jsonProblem = await getJsonMathProblem(
@@ -73,7 +73,5 @@ export async function addProblemAction({ request }) {
 	const index = `${jsonProblem.from}-${jsonProblem.questionNo}`;
 	localforage.setItem(index, jsonProblem);
 
-	console.log(JSON.stringify(await localforage.getItem(index)));
-
 	return redirect("/");
-}
+};

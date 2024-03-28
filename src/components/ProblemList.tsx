@@ -8,7 +8,7 @@ export default function ProblemList({
 	return (
 		<div className="problem-list">
 			<div className="problem-icon">
-				<Problem {...problems[0]} />
+				<Problem />
 			</div>
 		</div>
 	);

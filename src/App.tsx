@@ -1,7 +1,5 @@
-import localforage from "localforage";
-import AddProblem, { addProblemAction } from "./components/AddProblem";
-import Problem, { problemLoader } from "./components/Problem";
-import ProblemList from "./components/ProblemList";
+import AddProblem from "./components/AddProblem";
+import Problem from "./components/Problem";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
@@ -9,8 +7,8 @@ const router = createBrowserRouter([
 	{
 		path: "/",
 		children: [
-			{ path: "add", element: <AddProblem />, action: addProblemAction },
-			{ path: "problem", element: <Problem />, loader: problemLoader },
+			{ path: "add", element: <AddProblem />, action: AddProblem.action },
+			{ path: "problem", element: <Problem />, loader: Problem.loader },
 		],
 	},
 ]);

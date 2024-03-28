@@ -7,11 +7,12 @@ export interface ProblemProps {
 	from: string;
 	questionNo: number;
 	problem: StructuredProblemHTML;
-	images: string[];
+	images: ArrayBuffer[];
 }
 
 export default function Problem() {
-	const { from, questionNo, problem, images } = useLoaderData();
+	const { from, questionNo, problem, images }: ProblemProps =
+		useLoaderData() as ProblemProps;
 
 	return (
 		<div className="problem">
@@ -29,10 +30,10 @@ export default function Problem() {
 	);
 }
 
-export async function problemLoader() {
+Problem.loader = async () => {
 	const problem = await localforage.getItem(
 		"2024年上海青浦区高三下学期高三一模-20"
 	);
 
 	return problem;
-}
+};
