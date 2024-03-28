@@ -1,6 +1,3 @@
-import https from "https";
-import fs from "fs";
-
 import { StructuredProblemHTML } from "../components/ProblemText";
 
 function levelUpMathElement(element: Element) {
@@ -40,28 +37,6 @@ async function imageToBlob(imageNode: Element): Promise<ArrayBuffer> {
 
 	return arrayBuffer;
 }
-
-// async function saveImage(imageNode: Element) {
-// 	const imageUrl = imageNode.getAttribute("src");
-
-// 	//download Image
-// 	await downloadImage(imageUrl!);
-// 	return imageUrl;
-// }
-// async function downloadImage(imageUrl: string) {
-// 	const response = await fetch(imageUrl);
-// 	const blob = await response.blob();
-// 	const url = URL.createObjectURL(blob);
-// 	const link = document.createElement("a");
-// 	link.href = url;
-// 	const imageName = imageUrl.split("/").slice(-1).toString();
-// 	link.download = imageName;
-// 	document.body.appendChild(link);
-// 	link.click();
-// 	document.body.removeChild(link);
-
-// 	return imageName;
-// }
 
 function structureProblem(problem: Element) {
 	const description = problem.querySelector("div.talqs_content");
