@@ -17,15 +17,15 @@ function removeAttributes(element: Element) {
 }
 
 async function extractImages(element: Element) {
-	const imgNodes = Array.from(element.querySelectorAll("p > img"));
-	const images: ArrayBuffer[] = [];
-
-	imgNodes.forEach(async (imgNode) => {
-		const arrayBuffer = await imageToBlob(imgNode);
-		images.push(arrayBuffer);
-		imgNode!.parentNode!.removeChild(imgNode);
-	});
-	return images;
+	const imgElements = Array.from(element.querySelectorAll("p > img"));
+	return Promise.all(
+		imgElements.map(async (imgElement) => {
+			const arrayBuffer = await imageToBlob(imgElement);
+			const parentElement = imgElement.parentElement!;
+			parentElement.remove();
+			return arrayBuffer;
+		})
+	);
 }
 
 async function imageToBlob(imageNode: Element): Promise<ArrayBuffer> {
