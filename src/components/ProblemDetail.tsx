@@ -3,6 +3,8 @@ import ProblemText, { StructuredProblemHTML } from "./ProblemText";
 import ProblemTitle from "./ProblemTitle";
 import { useLoaderData } from "react-router-dom";
 
+import classes from "./ProblemDetail.module.css";
+
 export interface ProblemProps {
 	from: string;
 	questionNo: number;
@@ -15,11 +17,11 @@ export default function ProblemDetail() {
 		useLoaderData() as ProblemProps;
 
 	return (
-		<div className="problem">
+		<div className={classes.problem}>
 			<ProblemTitle from={from} questionNo={questionNo} />
 			<ProblemText {...problem} />
 
-			<div className="images">
+			<div className={classes.images}>
 				{images.map((arrayBuffer: ArrayBuffer) => {
 					const blob = new Blob([arrayBuffer]);
 					const url = URL.createObjectURL(blob);

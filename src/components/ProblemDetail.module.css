@@ -1,0 +1,24 @@
+.problem {
+	margin: calc(min(50px, 10%));
+}
+
+.problem header::before {
+	border: 2px solid blue;
+	content: "";
+	margin-right: 10px;
+}
+
+.problem header {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.problem > p {
+	padding-left: 10px;
+	font-size: 15px;
+}
+
+.images img {
+	width: calc(max(20vw, 100px));
+}

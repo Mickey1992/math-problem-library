@@ -6,10 +6,8 @@ export default function ProblemTitle({
 	questionNo: number;
 }) {
 	return (
-		<div className="problem-title">
-			<h1>
-				【{from} 第{questionNo}题】
-			</h1>
-		</div>
+		<header>
+			{from} 第{questionNo}题
+		</header>
 	);
 }
