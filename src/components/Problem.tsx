@@ -30,10 +30,8 @@ export default function Problem() {
 	);
 }
 
-Problem.loader = async () => {
-	const problem = await localforage.getItem(
-		"2024年上海青浦区高三下学期高三一模-20"
-	);
+Problem.loader = async ({ params }) => {
+	const problem = await localforage.getItem(params.id);
 
 	return problem;
 };
