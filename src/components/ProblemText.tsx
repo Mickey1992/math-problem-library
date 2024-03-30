@@ -8,7 +8,7 @@ export default function ProblemText({
 	questions,
 }: StructuredProblemHTML) {
 	return (
-		<>
+		<p>
 			<div dangerouslySetInnerHTML={{ __html: description }}></div>
 			<div>
 				{questions.length > 0 && (
@@ -21,6 +21,6 @@ export default function ProblemText({
 					</ol>
 				)}
 			</div>
-		</>
+		</p>
 	);
 }

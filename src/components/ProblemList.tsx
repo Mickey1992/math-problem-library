@@ -1,6 +1,7 @@
 import localforage from "localforage";
 import { ProblemProps } from "./Problem";
-import { Link, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+import ProblemCard from "./ProblemCard";
 
 export default function ProblemList() {
 	const problems = useLoaderData() as ProblemProps[];
@@ -8,12 +9,7 @@ export default function ProblemList() {
 		<div className="problem-list">
 			{problems.map((problem) => {
 				const key = `${problem.from}-${problem.questionNo}`;
-				return (
-					<Link
-						key={key}
-						to={`/problem/${key}`}
-					>{`${problem.from}第${problem.questionNo}题`}</Link>
-				);
+				return <ProblemCard key={key} {...problem} />;
 			})}
 		</div>
 	);
