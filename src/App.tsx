@@ -1,5 +1,5 @@
 import AddProblem from "./components/AddProblem";
-import Problem from "./components/Problem";
+import ProblemDetail from "./components/ProblemDetail";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProblemList from "./components/ProblemList";
@@ -16,8 +16,8 @@ const router = createBrowserRouter([
 			{ path: "add", element: <AddProblem />, action: AddProblem.action },
 			{
 				path: "problem/:id",
-				element: <Problem />,
-				loader: Problem.loader,
+				element: <ProblemDetail />,
+				loader: ProblemDetail.loader,
 			},
 		],
 	},

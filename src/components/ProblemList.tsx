@@ -1,5 +1,5 @@
 import localforage from "localforage";
-import { ProblemProps } from "./Problem";
+import { ProblemProps } from "./ProblemDetail";
 import { useLoaderData } from "react-router-dom";
 import ProblemCard from "./ProblemCard";
 

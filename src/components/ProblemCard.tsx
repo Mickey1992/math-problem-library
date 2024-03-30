@@ -1,4 +1,4 @@
-import { ProblemProps } from "./Problem";
+import { ProblemProps } from "./ProblemDetail";
 import ProblemText from "./ProblemText";
 import { useNavigate } from "react-router-dom";
 

@@ -10,7 +10,7 @@ export interface ProblemProps {
 	images: ArrayBuffer[];
 }
 
-export default function Problem() {
+export default function ProblemDetail() {
 	const { from, questionNo, problem, images }: ProblemProps =
 		useLoaderData() as ProblemProps;
 
@@ -30,7 +30,7 @@ export default function Problem() {
 	);
 }
 
-Problem.loader = async ({ params }) => {
+ProblemDetail.loader = async ({ params }) => {
 	const problem = await localforage.getItem(params.id);
 
 	return problem;
