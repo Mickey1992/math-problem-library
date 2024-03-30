@@ -1,5 +1,6 @@
 import { ProblemProps } from "./ProblemDetail";
 import ProblemText from "./ProblemText";
+import ProblemTitle from "./ProblemTitle";
 import { useNavigate } from "react-router-dom";
 
 import classes from "./ProblemCard.module.css";
@@ -27,7 +28,7 @@ export default function ProblemCard({
 	}
 	return (
 		<div className={classes.card} onClick={handleCLick}>
-			<header>{`${from} 第${questionNo}题`}</header>
+			<ProblemTitle from={from} questionNo={questionNo} />
 			<section className={classes["card-content"]}>
 				<ProblemText {...problem} />
 				{cardMedia}
