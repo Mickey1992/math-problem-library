@@ -20,3 +20,8 @@ body {
 	border-radius: 30px;
 	margin-left: 20px;
 }
+
+ol > li.hide {
+	height: 0px;
+	overflow: hidden;
+}

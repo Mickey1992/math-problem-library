@@ -4,7 +4,11 @@ import ProblemTitle from "./ProblemTitle";
 import { useLoaderData } from "react-router-dom";
 import { motion } from "framer-motion";
 
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+
 import classes from "./ProblemDetail.module.css";
+import { useState } from "react";
 
 export interface ProblemProps {
 	from: string;
@@ -17,10 +21,41 @@ export default function ProblemDetail() {
 	const { from, questionNo, problem, images }: ProblemProps =
 		useLoaderData() as ProblemProps;
 
+	const numberOfSubQuestions = problem.questions.length;
+	const allSubQuestionsIndex = Array.from(
+		{ length: numberOfSubQuestions },
+		(_, i) => i
+	);
+
+	// SubQuestion No starts from 0
+	const [selectedSubQuestionsNo, setSelectedSubQuestionsNo] =
+		useState(allSubQuestionsIndex);
+
+	function handleClickSubQuestionNo(
+		event: React.MouseEvent<HTMLElement>,
+		newSelected: number[]
+	) {
+		setSelectedSubQuestionsNo(newSelected);
+	}
+
 	return (
 		<div className={classes.problem}>
 			<ProblemTitle from={from} questionNo={questionNo} />
-			<ProblemText {...problem} />
+			<ToggleButtonGroup
+				value={selectedSubQuestionsNo}
+				color="primary"
+				onChange={handleClickSubQuestionNo}
+			>
+				{allSubQuestionsIndex.map((no) => (
+					<ToggleButton value={no} key={no}>
+						{no + 1}
+					</ToggleButton>
+				))}
+			</ToggleButtonGroup>
+			<ProblemText
+				{...problem}
+				selectedSubQuestion={selectedSubQuestionsNo}
+			/>
 
 			<div className={classes.images}>
 				{images.map((arrayBuffer: ArrayBuffer) => {
