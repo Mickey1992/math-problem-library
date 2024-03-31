@@ -31,6 +31,8 @@ export default function ProblemDetail() {
 	const [selectedSubQuestionsNo, setSelectedSubQuestionsNo] =
 		useState(allSubQuestionsIndex);
 
+	const [preview, setPreview] = useState(false);
+
 	function handleClickSubQuestionNo(
 		event: React.MouseEvent<HTMLElement>,
 		newSelected: number[]
@@ -45,6 +47,9 @@ export default function ProblemDetail() {
 				value={selectedSubQuestionsNo}
 				color="primary"
 				onChange={handleClickSubQuestionNo}
+				sx={{
+					display: preview ? undefined : "none",
+				}}
 			>
 				{allSubQuestionsIndex.map((no) => (
 					<ToggleButton value={no} key={no}>
@@ -52,6 +57,17 @@ export default function ProblemDetail() {
 					</ToggleButton>
 				))}
 			</ToggleButtonGroup>
+
+			<ToggleButton
+				value="preview"
+				selected={preview}
+				onChange={() => {
+					setPreview((pre) => !pre);
+				}}
+				sx={{ position: "absolute", right: "20px", top: "5px" }}
+			>
+				Preview
+			</ToggleButton>
 			<ProblemText
 				{...problem}
 				selectedSubQuestion={selectedSubQuestionsNo}

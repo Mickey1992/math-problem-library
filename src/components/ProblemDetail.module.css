@@ -1,5 +1,6 @@
 .problem {
-	margin: calc(min(50px, 10%));
+	margin-top: calc(min(30px, 10%));
+	margin-left: calc(min(50px, 10%));
 }
 
 .problem header::before {
