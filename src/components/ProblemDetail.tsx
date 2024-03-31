@@ -2,6 +2,7 @@ import localforage from "localforage";
 import ProblemText, { StructuredProblemHTML } from "./ProblemText";
 import ProblemTitle from "./ProblemTitle";
 import { useLoaderData } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import classes from "./ProblemDetail.module.css";
 
@@ -25,7 +26,17 @@ export default function ProblemDetail() {
 				{images.map((arrayBuffer: ArrayBuffer) => {
 					const blob = new Blob([arrayBuffer]);
 					const url = URL.createObjectURL(blob);
-					return <img src={url} key={url} />;
+					return (
+						<motion.img
+							src={url}
+							key={url}
+							drag
+							whileDrag={{
+								border: "2px solid blue",
+								"border-radius": "10px",
+							}}
+						/>
+					);
 				})}
 			</div>
 		</div>
