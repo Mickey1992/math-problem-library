@@ -3,10 +3,12 @@ import ProblemDetail from "./components/ProblemDetail";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProblemList from "./components/ProblemList";
+import Header from "./components/Header";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
+		element: <Header />,
 		children: [
 			{
 				index: true,

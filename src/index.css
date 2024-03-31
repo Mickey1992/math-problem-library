@@ -1,3 +1,22 @@
+body {
+	margin: 0px;
+}
+
 .problem-list {
 	display: flex;
+}
+
+#header {
+	display: flex;
+	align-items: center;
+	height: 60px;
+	width: 100%;
+	border-bottom: 1px solid rgb(197 211 255 / 98%);
+	box-shadow: 1px 1px 5px rgb(197 211 255 / 98%);
+}
+
+#header img {
+	max-height: 80%;
+	border-radius: 30px;
+	margin-left: 20px;
 }
