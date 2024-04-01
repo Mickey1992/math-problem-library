@@ -10,6 +10,7 @@
 }
 
 .problem header {
+	display: inline;
 	font-size: 20px;
 	font-weight: bold;
 	margin-bottom: 20px;
@@ -22,4 +23,17 @@
 
 .images img {
 	width: calc(max(20vw, 100px));
+}
+
+.buttonGroup {
+	display: inline;
+	margin-left: 20px;
+}
+
+.subQuestionNo {
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	border: 1px groove;
+	margin-left: 10px;
 }

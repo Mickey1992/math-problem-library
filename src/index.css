@@ -2,10 +2,6 @@ body {
 	margin: 0px;
 }
 
-.problem-list {
-	display: flex;
-}
-
 #header {
 	display: flex;
 	align-items: center;

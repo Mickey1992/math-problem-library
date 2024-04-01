@@ -1,7 +1,9 @@
 export interface StructuredProblemHTML {
 	description: string;
 	questions: StructuredProblemHTML[];
-	selectedSubQuestion?: number[];
+	selectedSubQuestion: {
+		[k: string]: boolean;
+	};
 }
 
 export default function ProblemText({
@@ -16,18 +18,15 @@ export default function ProblemText({
 				{questions.length > 0 && (
 					<ol>
 						{questions.map((question, index) => {
-							let hide = false;
-							if (
-								selectedSubQuestion &&
-								selectedSubQuestion.length > 0 &&
-								!selectedSubQuestion.includes(index)
-							) {
-								hide = true;
-							}
 							return (
 								<li
 									key={question.description}
-									className={hide ? "hide" : undefined}
+									className={
+										!selectedSubQuestion ||
+										selectedSubQuestion[index]
+											? undefined
+											: "hide"
+									}
 								>
 									<ProblemText {...question} />
 								</li>
