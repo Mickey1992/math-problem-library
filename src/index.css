@@ -11,10 +11,16 @@ body {
 	box-shadow: 1px 1px 5px rgb(197 211 255 / 98%);
 }
 
-#header img {
-	max-height: 80%;
-	border-radius: 30px;
+#header a {
 	margin-left: 20px;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+#header img {
+	height: 80%;
+	border-radius: 50%;
 }
 
 ol > li.hide {
