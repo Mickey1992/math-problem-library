@@ -14,13 +14,26 @@ body {
 #header a {
 	margin-left: 20px;
 	height: 100%;
-	width: 100%;
+	width: fit-content;
 	display: flex;
 	align-items: center;
+	text-decoration: none;
 }
 #header img {
 	height: 80%;
 	border-radius: 50%;
+}
+
+#header menu {
+	margin-left: 10px;
+	list-style-type: none;
+	display: flex;
+}
+
+#header menu a.active {
+	border-bottom: 5px solid brown;
+	border-bottom-left-radius: 50%;
+	border-bottom-right-radius: 50%;
 }
 
 ol > li.hide {
