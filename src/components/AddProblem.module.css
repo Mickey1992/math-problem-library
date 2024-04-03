@@ -1,0 +1,30 @@
+.addForm {
+	position: relative;
+	margin: 30px;
+}
+
+.code {
+	position: relative;
+	margin: 20px;
+	height: fit-content;
+	width: fit-content;
+	padding-right: 50px;
+	border: 1px groove gray;
+	border-radius: 5px;
+}
+
+.code button {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.submit-buttons {
+	display: flex;
+	margin-top: 50px;
+	margin-left: 40%;
+}
+
+.submit-buttons button {
+	margin-left: 20px;
+}

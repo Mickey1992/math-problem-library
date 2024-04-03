@@ -4,6 +4,13 @@ import { Form, redirect } from "react-router-dom";
 import { getJsonMathProblem } from "../utils/problem";
 import localforage from "localforage";
 
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import BackupIcon from "@mui/icons-material/Backup";
+
+import classes from "./AddProblem.module.css";
+
 export default function AddProblem() {
 	const [questionNo, setQuestionNo] = useState("");
 
@@ -39,24 +46,61 @@ export default function AddProblem() {
 		: undefined;
 
 	return (
-		<Form method="PUT">
+		<Form method="PUT" className={classes.addForm}>
 			<div>
-				<label>Question No: </label>
-				<input
+				<TextField
+					required
+					label="Question No"
+					id="questionNo"
 					name="questionNo"
 					type="number"
+					defaultValue={0}
 					onChange={handleQuestionNoChange}
 					placeholder="please input the question no. here"
+					margin="normal"
+					size="small"
 				/>
-				{extractCode && <pre>{extractCode}</pre>}
-				<button onClick={handleCopy} type="button">
-					Copy
-				</button>
+				{extractCode && (
+					<div className={classes.code}>
+						<pre>{extractCode}</pre>
+						<Button
+							variant="outlined"
+							onClick={handleCopy}
+							type="button"
+							size="small"
+							startIcon={<ContentCopyIcon />}
+						>
+							Copy
+						</Button>
+					</div>
+				)}
 			</div>
 
-			<div>
-				<textarea name="problem-html" />
-				<button>Submit</button>
+			<div className={classes.paste}>
+				<TextField
+					required
+					label="Problem HTML"
+					id="problem-html"
+					name="problem-html"
+					placeholder="please input the problem html here"
+					defaultValue="<div>problem</div>"
+					multiline
+					rows={5}
+					fullWidth
+					margin="normal"
+					size="small"
+				/>
+			</div>
+			<div className={classes["submit-buttons"]}>
+				<Button
+					variant="outlined"
+					type="submit"
+					startIcon={<BackupIcon />}
+					size="small"
+				>
+					Submit
+				</Button>
+				{/* TODO: Add a button to clear user input */}
 			</div>
 		</Form>
 	);
