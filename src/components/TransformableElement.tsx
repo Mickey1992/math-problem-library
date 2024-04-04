@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
@@ -14,6 +14,12 @@ export default function TransformableElement({
 	draggable,
 	hideable,
 	...props
+}: {
+	children: JSX.Element;
+	resizable: boolean;
+	draggable: boolean;
+	hideable: boolean;
+	[x: string]: JSX.Element | boolean | string | number;
 }) {
 	const wrapper = useRef(null);
 	const elementRef = useRef(null);
@@ -28,13 +34,14 @@ export default function TransformableElement({
 		hover: boolean;
 	}>(null);
 
+	console.log(info);
 	useEffect(() => {
-		console.log(elementRef.current.firstChild);
+		if (elementRef?.current === null || wrapper?.current === null) return;
 		setInfo({
-			height: elementRef?.current?.offsetHeight ?? 0,
-			width: elementRef?.current?.offsetWidth ?? 0,
-			left: wrapper?.current?.clientLeft ?? 0,
-			top: wrapper?.current?.clientTop ?? 0,
+			height: elementRef.current["offsetHeight"],
+			width: elementRef.current["offsetWidth"],
+			left: wrapper.current["clientLeft"],
+			top: wrapper.current["clientTop"],
 			dragPointerX: 0,
 			dragPointerY: 0,
 			hover: false,
@@ -45,23 +52,7 @@ export default function TransformableElement({
 		};
 	}, [wrapper]);
 
-	function onDrag(event) {
-		console.log("pointerdown on DraggableElement");
-		event.stopPropagation();
-		setInfo((pre) =>
-			pre
-				? {
-						...pre,
-						dragPointerX: event.clientX,
-						dragPointerY: event.clientY,
-				  }
-				: pre
-		);
-		document.addEventListener("pointermove", doDrag);
-		document.addEventListener("pointerup", stopDrag);
-	}
-
-	function doDrag(event) {
+	const doDrag = useCallback((event: PointerEvent) => {
 		setInfo((pre) => {
 			if (!pre) return pre;
 			const deltaX = event.clientX - pre.dragPointerX;
@@ -74,29 +65,33 @@ export default function TransformableElement({
 				dragPointerY: event.clientY,
 			};
 		});
-	}
+	}, []);
 
-	function stopDrag() {
+	const stopDrag = useCallback(() => {
 		document.removeEventListener("pointermove", doDrag);
 		document.removeEventListener("pointerup", stopDrag);
-	}
+	}, [doDrag]);
 
-	function onResize(event) {
-		event.stopPropagation();
-		setInfo((pre) =>
-			pre
-				? {
-						...pre,
-						dragPointerX: event.clientX,
-						dragPointerY: event.clientY,
-				  }
-				: pre
-		);
-		document.addEventListener("pointermove", doResize);
-		document.addEventListener("pointerup", stopResize);
-	}
+	const onDrag = useCallback(
+		(event: React.PointerEvent) => {
+			console.log("pointerdown on DraggableElement");
+			event.stopPropagation();
+			setInfo((pre) =>
+				pre
+					? {
+							...pre,
+							dragPointerX: event.clientX,
+							dragPointerY: event.clientY,
+					  }
+					: pre
+			);
+			document.addEventListener("pointermove", doDrag);
+			document.addEventListener("pointerup", stopDrag);
+		},
+		[doDrag, stopDrag]
+	);
 
-	function doResize(event) {
+	const doResize = useCallback((event: PointerEvent) => {
 		setInfo((pre) => {
 			if (!pre) return pre;
 			const deltaX = event.clientX - pre.dragPointerX;
@@ -112,24 +107,43 @@ export default function TransformableElement({
 				dragPointerY: event.clientY,
 			};
 		});
-	}
+	}, []);
 
-	function stopResize() {
+	const stopResize = useCallback(() => {
 		document.removeEventListener("pointermove", doResize);
 		document.removeEventListener("pointerup", stopResize);
-	}
-	function onHover() {
-		setInfo((pre) => (pre ? { ...pre, hover: true } : pre));
-	}
+	}, [doResize]);
 
-	function stopHover() {
+	const onResize = useCallback(
+		(event: React.PointerEvent) => {
+			event.stopPropagation();
+			setInfo((pre) =>
+				pre
+					? {
+							...pre,
+							dragPointerX: event.clientX,
+							dragPointerY: event.clientY,
+					  }
+					: pre
+			);
+			document.addEventListener("pointermove", doResize);
+			document.addEventListener("pointerup", stopResize);
+		},
+		[doResize, stopResize]
+	);
+
+	const onHover = useCallback(() => {
+		setInfo((pre) => (pre ? { ...pre, hover: true } : pre));
+	}, []);
+
+	const stopHover = useCallback(() => {
 		setInfo((pre) => (pre ? { ...pre, hover: false } : pre));
-	}
+	}, []);
 
 	return (
 		<div
 			ref={wrapper}
-			onPointerDown={onDrag}
+			onPointerDown={draggable ? onDrag : undefined}
 			onPointerEnter={onHover}
 			onPointerLeave={stopHover}
 			style={
@@ -166,20 +180,26 @@ export default function TransformableElement({
 			>
 				{children}
 			</StyledElement>
-			<div hidden={info?.hover ? false : true}>
-				<HighlightOffIcon sx={{ position: "absolute", top: 0 }} />
-			</div>
-
-			<div hidden={info?.hover ? false : true} onPointerDown={onResize}>
-				<OpenInFullIcon
-					sx={{
-						position: "absolute",
-						right: 0,
-						bottom: 0,
-						rotate: "90deg",
-					}}
-				/>
-			</div>
+			{hideable && (
+				<div hidden={info?.hover ? false : true}>
+					<HighlightOffIcon sx={{ position: "absolute", top: 0 }} />
+				</div>
+			)}
+			{resizable && (
+				<div
+					hidden={info?.hover ? false : true}
+					onPointerDown={onResize}
+				>
+					<OpenInFullIcon
+						sx={{
+							position: "absolute",
+							right: 0,
+							bottom: 0,
+							rotate: "90deg",
+						}}
+					/>
+				</div>
+			)}
 		</div>
 	);
 }
