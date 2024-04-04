@@ -22,7 +22,7 @@
 }
 
 .image {
-	width: fit-content;
+	width: calc(max(20vw, 100px));
 }
 
 .image:hover {
@@ -31,7 +31,8 @@
 }
 
 .image img {
-	width: calc(max(20vw, 100px));
+	width: 100%;
+	height: auto;
 }
 
 .buttonGroup {

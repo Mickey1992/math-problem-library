@@ -10,6 +10,9 @@ import { useState } from "react";
 import ToggleButton from "./Buttons/ToggleButton";
 import ToggleButtonGroup from "./Buttons/ToggleButtonGroup";
 import DraggableImg from "./DraggableImg";
+import ResizableElement from "./ResizableElement";
+import DraggableElement from "./DraggableElement";
+import TransformableElement from "./TransformableElement";
 
 export interface ProblemProps {
 	from: string;
@@ -70,7 +73,9 @@ export default function ProblemDetail() {
 					const blob = new Blob([arrayBuffer]);
 					const url = URL.createObjectURL(blob);
 					return (
-						<DraggableImg imgUrl={url} className={classes.image} />
+						<TransformableElement className={classes.image}>
+							<img src={url} />
+						</TransformableElement>
 					);
 				})}
 			</div>
