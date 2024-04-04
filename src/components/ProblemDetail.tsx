@@ -70,16 +70,7 @@ export default function ProblemDetail() {
 					const blob = new Blob([arrayBuffer]);
 					const url = URL.createObjectURL(blob);
 					return (
-						<DraggableImg imgUrl={url} />
-						// <motion.img
-						// 	src={url}
-						// 	key={url}
-						// 	drag
-						// 	whileDrag={{
-						// 		border: "2px solid blue",
-						// 		"border-radius": "10px",
-						// 	}}
-						// />
+						<DraggableImg imgUrl={url} className={classes.image} />
 					);
 				})}
 			</div>

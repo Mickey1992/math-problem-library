@@ -21,7 +21,16 @@
 	font-size: 15px;
 }
 
-.images img {
+.image {
+	width: fit-content;
+}
+
+.image:hover {
+	border: 1px dotted blue;
+	border-radius: 5px;
+}
+
+.image img {
 	width: calc(max(20vw, 100px));
 }
 
