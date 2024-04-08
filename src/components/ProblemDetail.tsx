@@ -72,14 +72,19 @@ export default function ProblemDetail() {
 					const blob = new Blob([arrayBuffer]);
 					const url = URL.createObjectURL(blob);
 					return (
-						<TransformableElement
-							className={classes.image}
-							draggable
-							resizable
-							hideable
-						>
-							<img src={url} />
-						</TransformableElement>
+						// <TransformableElement
+						// 	className={classes.image}
+						// 	draggable
+						// 	resizable
+						// 	hideable
+						// >
+						// 	<img src={url} />
+						// </TransformableElement>
+						<DraggableElement>
+							<ResizableElement className={classes.image}>
+								<img src={url} />
+							</ResizableElement>
+						</DraggableElement>
 					);
 				})}
 			</div>
