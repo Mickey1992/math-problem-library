@@ -10,7 +10,6 @@ import ToggleButton from "./Buttons/ToggleButton";
 import ToggleButtonGroup from "./Buttons/ToggleButtonGroup";
 import withResizable from "./hoc/withResizable";
 import withDraggable from "./hoc/withDraggable";
-import React from "react";
 
 export interface ProblemProps {
 	from: string;
@@ -82,7 +81,11 @@ export default function ProblemDetail() {
 	);
 }
 
-ProblemDetail.loader = async ({ params }) => {
+interface Params {
+	id: string;
+}
+
+ProblemDetail.loader = async ({ params }: { params: Params }) => {
 	const problem = await localforage.getItem(params.id);
 
 	return problem;

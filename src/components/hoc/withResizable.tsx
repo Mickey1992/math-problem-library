@@ -5,6 +5,8 @@ import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import React from "react";
 
+import { WrappedComponentProps } from "./common";
+
 interface ResizeInfo {
 	height: number;
 	width: number;
@@ -13,7 +15,9 @@ interface ResizeInfo {
 	hover: boolean;
 }
 
-export default function withResizable(WrappedComponent = React.Fragment) {
+export default function withResizable(
+	WrappedComponent: React.ComponentType<WrappedComponentProps> = React.Fragment
+) {
 	return function Resizable({
 		children,
 		initialSize = { width: "calc(max(20vw, 100px))", height: "auto" },
@@ -21,7 +25,7 @@ export default function withResizable(WrappedComponent = React.Fragment) {
 		...props
 	}: {
 		children: JSX.Element;
-		initialSize: { width?: number | string; height?: number | string };
+		initialSize?: { width?: number | string; height?: number | string };
 		style?: {
 			[x: string]: string | number | boolean;
 		};
