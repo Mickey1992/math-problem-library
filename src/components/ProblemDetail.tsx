@@ -8,10 +8,9 @@ import { useState } from "react";
 
 import ToggleButton from "./Buttons/ToggleButton";
 import ToggleButtonGroup from "./Buttons/ToggleButtonGroup";
-import DraggableImg from "./DraggableImg";
-import ResizableElement from "./ResizableElement";
-import DraggableElement from "./DraggableElement";
-import TransformableElement from "./TransformableElement";
+import withResizable from "./hoc/withResizable";
+import withDraggable from "./hoc/withDraggable";
+import React from "react";
 
 export interface ProblemProps {
 	from: string;
@@ -71,20 +70,11 @@ export default function ProblemDetail() {
 				{images.map((arrayBuffer: ArrayBuffer) => {
 					const blob = new Blob([arrayBuffer]);
 					const url = URL.createObjectURL(blob);
+					const DraggableResizable = withDraggable(withResizable());
 					return (
-						// <TransformableElement
-						// 	className={classes.image}
-						// 	draggable
-						// 	resizable
-						// 	hideable
-						// >
-						// 	<img src={url} />
-						// </TransformableElement>
-						<DraggableElement>
-							<ResizableElement className={classes.image}>
-								<img src={url} />
-							</ResizableElement>
-						</DraggableElement>
+						<DraggableResizable className={classes.image} key={url}>
+							<img src={url} />
+						</DraggableResizable>
 					);
 				})}
 			</div>

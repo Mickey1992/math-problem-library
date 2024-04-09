@@ -23,6 +23,8 @@
 
 .image {
 	width: calc(max(20vw, 100px));
+	border: 1px dotted rgb(255, 255, 255);
+	border-radius: 5px;
 }
 
 .image:hover {
