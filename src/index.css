@@ -4,6 +4,7 @@ body {
 
 #header {
 	display: flex;
+	position: relative;
 	align-items: center;
 	height: 60px;
 	width: 100%;
@@ -34,6 +35,14 @@ body {
 	border-bottom: 5px solid brown;
 	border-bottom-left-radius: 50%;
 	border-bottom-right-radius: 50%;
+}
+
+#header-toggle-icon {
+	position: relative;
+	margin: 0px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 ol > li.hide {

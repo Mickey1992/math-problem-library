@@ -42,7 +42,7 @@ export default function withResizable(
 		const [info, setInfo] = useState<null | ResizeInfo>(null);
 
 		useEffect(() => {
-			if (elementRef?.current === null) return;
+			if (elementRef.current === null) return;
 			setInfo({
 				height: elementRef.current["offsetHeight"],
 				width: elementRef.current["offsetWidth"],
