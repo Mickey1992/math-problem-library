@@ -11,7 +11,7 @@ interface DragInfo {
 }
 
 export default function withDraggable(
-	WrappedComponent: React.ComponentType<WrappedComponentProps>
+	WrappedComponent: React.ComponentType<WrappedComponentProps> = React.Fragment
 ) {
 	return function Draggable({
 		children,
@@ -60,6 +60,7 @@ export default function withDraggable(
 			[doDrag, stopDrag]
 		);
 
+		if (!children) return null;
 		return (
 			<div
 				ref={wrapperRef}

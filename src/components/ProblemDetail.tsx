@@ -10,6 +10,7 @@ import ToggleButton from "./Buttons/ToggleButton";
 import ToggleButtonGroup from "./Buttons/ToggleButtonGroup";
 import withResizable from "./hoc/withResizable";
 import withDraggable from "./hoc/withDraggable";
+import withHideable from "./hoc/withHideable";
 
 export interface ProblemProps {
 	from: string;
@@ -69,7 +70,9 @@ export default function ProblemDetail() {
 				{images.map((arrayBuffer: ArrayBuffer) => {
 					const blob = new Blob([arrayBuffer]);
 					const url = URL.createObjectURL(blob);
-					const DraggableResizable = withDraggable(withResizable());
+					const DraggableResizable = withDraggable(
+						withHideable(withResizable())
+					);
 					return (
 						<DraggableResizable className={classes.image} key={url}>
 							<img src={url} />

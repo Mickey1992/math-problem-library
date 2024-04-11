@@ -1,9 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import React from "react";
 
 import { WrappedComponentProps } from "./common";
 
@@ -106,6 +104,8 @@ export default function withResizable(
 			setInfo((pre) => (pre ? { ...pre, hover: false } : pre));
 		}, []);
 
+		if (!children) return null;
+
 		return (
 			<div
 				ref={elementRef}
@@ -124,9 +124,6 @@ export default function withResizable(
 				{...props}
 			>
 				<WrappedComponent>{children}</WrappedComponent>
-				<div hidden={info?.hover ? false : true}>
-					<HighlightOffIcon sx={{ position: "absolute", top: 0 }} />
-				</div>
 
 				<div
 					hidden={info?.hover ? false : true}
