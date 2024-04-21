@@ -15,7 +15,6 @@ export default function ImageUploader({ handleImageUpload, uploadedImages }) {
 
 	return (
 		<div className={classes["image-uploader"]}>
-			<p>上传图片</p>
 			<div>
 				{uploadedImages &&
 					uploadedImages.length > 0 &&

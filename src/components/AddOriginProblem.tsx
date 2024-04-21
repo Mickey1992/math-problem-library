@@ -9,6 +9,11 @@ import { Form, redirect } from "react-router-dom";
 
 import useMathJax from "../hooks/useMathJax";
 
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import BackupIcon from "@mui/icons-material/Backup";
+import classes from "./AddProblem.module.css";
+
 export type Problem = {
 	description?: string;
 	questions?: Problem[];
@@ -58,11 +63,13 @@ export default function AddOriginProblem() {
 	const [images, setImages] = useState<ArrayBuffer[]>([]);
 
 	useMathJax(problem);
+	console.log(problem);
 
 	function handleProblemTextChange(
 		event: React.ChangeEvent<HTMLInputElement>
 	) {
 		const { name, value } = event.target;
+		console.log(event.target);
 		setProblem((pre) => updateProblemText(pre, name.split("."), value));
 	}
 
@@ -78,35 +85,64 @@ export default function AddOriginProblem() {
 
 	return (
 		<Form method="PUT">
-			<label>From</label>
-			<input type="text" name="from" />
-			<br />
-			<label>QuestionNo</label>
-			<input type="number" name="question-no" />
-			<br />
-			<label>Question</label>
-			<ProblemInput
-				title={"Problem"}
-				handleProblemTextChange={handleProblemTextChange}
-				handleAddSubQuestion={handleAddSubQuestion}
-			/>
+			<div className={classes["input-area"]}>
+				<div className={classes.left}>
+					<div className={classes["input-group"]}>
+						<label>题源：</label>
+						<TextField
+							type="text"
+							name="from"
+							label="From"
+							size="small"
+						/>
+					</div>
 
-			<ImageUploader
-				handleImageUpload={handleImageUpload}
-				uploadedImages={images}
-			/>
-
-			<p id="preview">
-				<ProblemText {...problem} />
-			</p>
+					<div className={classes["input-group"]}>
+						<label>编号：</label>
+						<TextField
+							type="number"
+							name="question-no"
+							label="QuestionNo"
+							size="small"
+						/>
+					</div>
+					<div className={classes["input-group"]}>
+						<label>题目：</label>
+						<ProblemInput
+							handleProblemTextChange={handleProblemTextChange}
+							handleAddSubQuestion={handleAddSubQuestion}
+						/>
+					</div>
+					<div className={classes["input-group"]}>
+						<label>图片：</label>
+						<ImageUploader
+							handleImageUpload={handleImageUpload}
+							uploadedImages={images}
+						/>
+					</div>
+				</div>
+				<div className={classes.right}>
+					<p className={classes["problem-text-preview"]}>
+						<ProblemText {...problem} />
+					</p>
+				</div>
+			</div>
 
 			<input
 				hidden
 				value={JSON.stringify(jsonProblem)}
 				name="problem-data"
 			></input>
-
-			<button type="submit">Submit</button>
+			<div className={classes["submit-buttons"]}>
+				<Button
+					variant="outlined"
+					type="submit"
+					startIcon={<BackupIcon />}
+					size="small"
+				>
+					Submit
+				</Button>
+			</div>
 		</Form>
 	);
 }

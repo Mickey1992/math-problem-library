@@ -1,4 +1,9 @@
 import { useState } from "react";
+import TextField from "@mui/material/TextField";
+import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import Button from "@mui/material/Button";
+
+import classes from "./AddProblem.module.css";
 
 type ProblemInputProps = {
 	title?: string;
@@ -28,13 +33,28 @@ export default function ProblemInput({
 	}
 
 	return (
-		<>
+		<div className={classes["problem-input"]}>
 			{title && <label>{title}</label>}
-			<input type="text" name={name} onChange={handleProblemTextChange} />
+			<TextField
+				label={title}
+				type="text"
+				name={name}
+				size="small"
+				multiline
+				rows={3}
+				fullWidth
+				onChange={handleProblemTextChange}
+			/>
 			{subquestionEnabled && (
-				<button type="button" onClick={onAddSubQuestion}>
-					+
-				</button>
+				<Button
+					variant="outlined"
+					type="button"
+					startIcon={<SubdirectoryArrowRightIcon />}
+					size="small"
+					onClick={onAddSubQuestion}
+				>
+					Add sub
+				</Button>
 			)}
 			{subQuestionCount > 0 && (
 				<ol>
@@ -57,6 +77,6 @@ export default function ProblemInput({
 					})}
 				</ol>
 			)}
-		</>
+		</div>
 	);
 }
