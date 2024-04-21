@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import ProblemInput from "./ProblemInput";
 import ProblemText from "./ProblemText";
 import ImageUploader from "./ImageUploader";
-import React from "react";
+
+import localforage from "localforage";
+
+import { Form, redirect } from "react-router-dom";
 
 type Problem = {
 	description?: string;
@@ -36,8 +39,21 @@ function updateProblemText(problem: Problem, names: string[], text: string) {
 	}
 }
 
+function base64ToArrayBuffer(base64: string): ArrayBuffer {
+	const binaryString = window.atob(
+		base64.replace("data:image/png;base64,", "")
+	);
+	const len = binaryString.length;
+	const bytes = new Uint8Array(len);
+	for (let i = 0; i < len; i++) {
+		bytes[i] = binaryString.charCodeAt(i);
+	}
+	return bytes.buffer;
+}
+
 export default function AddOriginProblem() {
 	const [problem, setProblem] = useState<Problem>({});
+	const [images, setImages] = useState<ArrayBuffer[]>([]);
 
 	useEffect(() => {
 		if (window.MathJax) {
@@ -56,10 +72,19 @@ export default function AddOriginProblem() {
 		setProblem((pre) => updateProblemText(pre, name.split("."), ""));
 	}
 
+	function handleImageUpload(image: ArrayBuffer) {
+		setImages((pre) => [...pre, image]);
+	}
+
+	const jsonProblem = { problem, images };
+
 	return (
-		<form>
+		<Form method="PUT">
 			<label>From</label>
 			<input type="text" name="from" />
+			<br />
+			<label>QuestionNo</label>
+			<input type="number" name="question-no" />
 			<br />
 			<label>Question</label>
 			<ProblemInput
@@ -68,11 +93,39 @@ export default function AddOriginProblem() {
 				handleAddSubQuestion={handleAddSubQuestion}
 			/>
 
-			<ImageUploader />
+			<ImageUploader
+				handleImageUpload={handleImageUpload}
+				uploadedImages={images}
+			/>
 
 			<p id="preview">
 				<ProblemText {...problem} />
 			</p>
-		</form>
+
+			<input
+				hidden
+				value={JSON.stringify(jsonProblem)}
+				name="problem-data"
+			></input>
+
+			<button type="submit">Submit</button>
+		</Form>
 	);
 }
+
+AddOriginProblem.action = async ({ request }) => {
+	console.log("AddOriginProblem.action");
+	const data = await request.formData();
+	console.log(data);
+	console.log(JSON.parse(data.get("problem-data")));
+
+	const jsonProblem = JSON.parse(data.get("problem-data"));
+	jsonProblem.images = jsonProblem.images.map(base64ToArrayBuffer);
+	jsonProblem.from = data.get("from");
+	jsonProblem.questionNo = data.get("question-no");
+
+	const index = `${jsonProblem.from}-${jsonProblem.questionNo}`;
+	localforage.setItem(index, jsonProblem);
+
+	return redirect("/");
+};

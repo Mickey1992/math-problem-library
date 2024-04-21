@@ -4,7 +4,7 @@ import ProblemTitle from "./ProblemTitle";
 import { useLoaderData } from "react-router-dom";
 
 import classes from "./ProblemDetail.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ToggleButton from "./Buttons/ToggleButton";
 import ToggleButtonGroup from "./Buttons/ToggleButtonGroup";
@@ -23,7 +23,7 @@ export default function ProblemDetail() {
 	const { from, questionNo, problem, images }: ProblemProps =
 		useLoaderData() as ProblemProps;
 
-	const numberOfSubQuestions = problem.questions.length;
+	const numberOfSubQuestions = problem.questions?.length || 0;
 	const allSubQuestionsIndex = Array.from(
 		{ length: numberOfSubQuestions },
 		(_, i) => i
@@ -41,6 +41,12 @@ export default function ProblemDetail() {
 			return { ...prev, [clickedValue]: !prev[clickedValue] };
 		});
 	}
+
+	useEffect(() => {
+		if (window.MathJax) {
+			window.MathJax.typesetPromise();
+		}
+	}, [problem]);
 
 	return (
 		<div className={classes.problem}>

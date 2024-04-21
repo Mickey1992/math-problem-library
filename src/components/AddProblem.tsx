@@ -6,4 +6,4 @@ export default function AddProblem() {
 	return <AddOriginProblem />;
 }
 
-AddProblem.action = AddExistedProblem.action;
+AddProblem.action = AddOriginProblem.action;
