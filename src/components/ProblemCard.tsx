@@ -3,8 +3,6 @@ import ProblemText from "./ProblemText";
 import ProblemTitle from "./ProblemTitle";
 import { useNavigate } from "react-router-dom";
 
-import { useEffect } from "react";
-
 import classes from "./ProblemCard.module.css";
 
 export default function ProblemCard({
@@ -13,12 +11,6 @@ export default function ProblemCard({
 	problem,
 	images,
 }: ProblemProps) {
-	useEffect(() => {
-		if (window.MathJax) {
-			window.MathJax.typesetPromise();
-		}
-	}, [problem]);
-
 	const navigate = useNavigate();
 	let cardMedia = null;
 	if (images.length > 0) {

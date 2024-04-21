@@ -3,8 +3,12 @@ import { ProblemProps } from "./ProblemDetail";
 import { useLoaderData } from "react-router-dom";
 import ProblemCard from "./ProblemCard";
 
+import useMathJax from "../hooks/useMathJax";
+
 export default function ProblemList() {
 	const problems = useLoaderData() as ProblemProps[];
+
+	useMathJax(problems);
 	return (
 		<div className="problem-list">
 			{problems.map((problem) => {

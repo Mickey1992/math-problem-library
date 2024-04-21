@@ -4,13 +4,15 @@ import ProblemTitle from "./ProblemTitle";
 import { useLoaderData } from "react-router-dom";
 
 import classes from "./ProblemDetail.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import ToggleButton from "./Buttons/ToggleButton";
 import ToggleButtonGroup from "./Buttons/ToggleButtonGroup";
 import withResizable from "./hoc/withResizable";
 import withDraggable from "./hoc/withDraggable";
 import withHideable from "./hoc/withHideable";
+
+import useMathJax from "../hooks/useMathJax";
 
 export interface ProblemProps {
 	from: string;
@@ -22,6 +24,8 @@ export interface ProblemProps {
 export default function ProblemDetail() {
 	const { from, questionNo, problem, images }: ProblemProps =
 		useLoaderData() as ProblemProps;
+
+	useMathJax(problem);
 
 	const numberOfSubQuestions = problem.questions?.length || 0;
 	const allSubQuestionsIndex = Array.from(
@@ -41,12 +45,6 @@ export default function ProblemDetail() {
 			return { ...prev, [clickedValue]: !prev[clickedValue] };
 		});
 	}
-
-	useEffect(() => {
-		if (window.MathJax) {
-			window.MathJax.typesetPromise();
-		}
-	}, [problem]);
 
 	return (
 		<div className={classes.problem}>

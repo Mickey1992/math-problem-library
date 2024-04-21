@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProblemInput from "./ProblemInput";
 import ProblemText from "./ProblemText";
 import ImageUploader from "./ImageUploader";
@@ -7,7 +7,9 @@ import localforage from "localforage";
 
 import { Form, redirect } from "react-router-dom";
 
-type Problem = {
+import useMathJax from "../hooks/useMathJax";
+
+export type Problem = {
 	description?: string;
 	questions?: Problem[];
 };
@@ -55,11 +57,7 @@ export default function AddOriginProblem() {
 	const [problem, setProblem] = useState<Problem>({});
 	const [images, setImages] = useState<ArrayBuffer[]>([]);
 
-	useEffect(() => {
-		if (window.MathJax) {
-			window.MathJax.typesetPromise();
-		}
-	}, [problem]);
+	useMathJax(problem);
 
 	function handleProblemTextChange(
 		event: React.ChangeEvent<HTMLInputElement>
