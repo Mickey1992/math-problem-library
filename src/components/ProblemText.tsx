@@ -1,6 +1,6 @@
 export interface StructuredProblemHTML {
-	description: string;
-	questions: StructuredProblemHTML[];
+	description?: string;
+	questions?: StructuredProblemHTML[];
 	selectedSubQuestion?: {
 		[k: string]: boolean;
 	};
@@ -11,6 +11,7 @@ export default function ProblemText({
 	questions,
 	selectedSubQuestion = undefined,
 }: StructuredProblemHTML) {
+	if (!description) return null;
 	return (
 		<p>
 			<div dangerouslySetInnerHTML={{ __html: description }}></div>

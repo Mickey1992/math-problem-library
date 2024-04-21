@@ -43,7 +43,9 @@ export default function AddOriginProblem() {
 		}
 	}, [problem]);
 
-	function handleProblemTextChange(event) {
+	function handleProblemTextChange(
+		event: React.ChangeEvent<HTMLInputElement>
+	) {
 		const { name, value } = event.target;
 		setProblem((pre) => updateProblemText(pre, name.split("."), value));
 	}
@@ -65,10 +67,7 @@ export default function AddOriginProblem() {
 			/>
 
 			<p id="preview">
-				<ProblemText
-					description={problem.description}
-					questions={problem.questions}
-				/>
+				<ProblemText {...problem} />
 			</p>
 		</form>
 	);
