@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import ProblemInput from "./ProblemInput";
 import ProblemText from "./ProblemText";
+import ImageUploader from "./ImageUploader";
+import React from "react";
 
 type Problem = {
 	description?: string;
@@ -65,6 +67,8 @@ export default function AddOriginProblem() {
 				handleProblemTextChange={handleProblemTextChange}
 				handleAddSubQuestion={handleAddSubQuestion}
 			/>
+
+			<ImageUploader />
 
 			<p id="preview">
 				<ProblemText {...problem} />

@@ -28,3 +28,25 @@
 .submit-buttons button {
 	margin-left: 20px;
 }
+
+.image-uploader > div {
+	display: flex;
+	align-items: center;
+}
+
+.image-preview {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 150px;
+	width: 150px;
+	margin: 20px;
+	border: 1px dotted rgb(41, 40, 40);
+	border-radius: 10px;
+}
+
+.image-preview img {
+	width: 100%;
+	height: fit-content;
+	overflow: hidden;
+}
