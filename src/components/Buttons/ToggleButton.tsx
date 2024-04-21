@@ -19,7 +19,7 @@ export default function ToggleButton({
 		<motion.button
 			type="button"
 			onClick={handleClick}
-			animate={toggleStyles[+selected]}
+			style={toggleStyles[+selected]}
 			initial={false}
 			{...props}
 			whileHover={{ opacity: 0.5 }}

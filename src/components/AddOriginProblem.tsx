@@ -4,28 +4,28 @@ import ProblemText from "./ProblemText";
 
 type Problem = {
 	description?: string;
-	subQuestions?: Problem[];
+	questions?: Problem[];
 };
 
 //names: [subQuestion, subId, subQuestion, subId, ..., description]
 function updateProblemText(problem: Problem, names: string[], text: string) {
 	if (names.length <= 1) {
 		return { ...problem, description: text };
-	} else if (!problem.subQuestions) {
-		return { ...problem, subQuestions: [{ description: text }] };
-	} else if (parseInt(names[1]) >= problem.subQuestions.length) {
+	} else if (!problem.questions) {
+		return { ...problem, questions: [{ description: text }] };
+	} else if (parseInt(names[1]) >= problem.questions.length) {
 		return {
 			...problem,
-			subQuestions: [...problem.subQuestions, { description: text }],
+			questions: [...problem.questions, { description: text }],
 		};
 	} else {
 		const subId = parseInt(names[1]);
-		const targetProblem = problem.subQuestions[subId];
+		const targetProblem = problem.questions[subId];
 		const updatedProblem = {
 			...problem,
-			subQuestions: [...problem.subQuestions],
+			questions: [...problem.questions],
 		};
-		updatedProblem.subQuestions[subId] = updateProblemText(
+		updatedProblem.questions[subId] = updateProblemText(
 			targetProblem,
 			names.slice(2),
 			text
@@ -36,7 +36,6 @@ function updateProblemText(problem: Problem, names: string[], text: string) {
 
 export default function AddOriginProblem() {
 	const [problem, setProblem] = useState<Problem>({});
-	console.log(problem);
 
 	useEffect(() => {
 		if (window.MathJax) {
@@ -49,7 +48,7 @@ export default function AddOriginProblem() {
 		setProblem((pre) => updateProblemText(pre, name.split("."), value));
 	}
 
-	function handleAddSubQuestion(name) {
+	function handleAddSubQuestion(name: string) {
 		setProblem((pre) => updateProblemText(pre, name.split("."), ""));
 	}
 
@@ -68,7 +67,7 @@ export default function AddOriginProblem() {
 			<p id="preview">
 				<ProblemText
 					description={problem.description}
-					questions={problem.subQuestions}
+					questions={problem.questions}
 				/>
 			</p>
 		</form>

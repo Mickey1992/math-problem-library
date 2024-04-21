@@ -1,5 +1,14 @@
 import { useState } from "react";
 
+type ProblemInputProps = {
+	title?: string;
+	name?: string;
+	handleProblemTextChange: (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => void;
+	handleAddSubQuestion: (name: string) => void;
+};
+
 const MAX_DEPTH = 2;
 
 export default function ProblemInput({
@@ -7,18 +16,13 @@ export default function ProblemInput({
 	name = "description",
 	handleProblemTextChange,
 	handleAddSubQuestion,
-}: {
-	title?: string;
-	name?: string;
-	handleProblemTextChange;
-	handleAddSubQuestion;
-}) {
+}: ProblemInputProps) {
 	const [subQuestionCount, setSubQuestinoCount] = useState(0);
-	const depth = name.split("1").filter((n) => n === "subQuestion").length;
+	const depth = name.split(".").filter((n) => n === "questions").length;
 	const subquestionEnabled = depth < MAX_DEPTH;
 
 	function onAddSubQuestion() {
-		const subName = `${name}.subQuestion[${subQuestionCount}]`;
+		const subName = `${name}.questions[${subQuestionCount}]`;
 		handleAddSubQuestion(subName);
 		setSubQuestinoCount((prev) => prev + 1);
 	}
@@ -37,7 +41,7 @@ export default function ProblemInput({
 					{Array.from({ length: subQuestionCount }, (_, i) => {
 						const subName = `${name.replace(
 							"description",
-							"subQuestion"
+							"questions"
 						)}.${i}.description`;
 						return (
 							<li key={subName}>

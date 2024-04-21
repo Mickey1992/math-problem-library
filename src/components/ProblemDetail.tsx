@@ -1,5 +1,5 @@
 import localforage from "localforage";
-import ProblemText, { StructuredProblemHTML } from "./ProblemText";
+import ProblemText, { ProblemTextProps } from "./ProblemText";
 import ProblemTitle from "./ProblemTitle";
 import { useLoaderData } from "react-router-dom";
 
@@ -15,7 +15,7 @@ import withHideable from "./hoc/withHideable";
 export interface ProblemProps {
 	from: string;
 	questionNo: number;
-	problem: StructuredProblemHTML;
+	problem: ProblemTextProps;
 	images: ArrayBuffer[];
 }
 
