@@ -5,10 +5,11 @@
 	height: auto;
 	margin: 50px;
 	border-radius: 10px;
+	border: 1px solid transparent;
 }
 
 .card:hover {
-	border: 1px solid salmon;
+	border-color: salmon;
 	scale: 1.01;
 	cursor: grab;
 }
