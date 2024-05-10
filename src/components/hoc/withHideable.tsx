@@ -1,27 +1,19 @@
 import React, { useRef, useState, useCallback } from "react";
 
-import { WrappedComponentProps } from "./common";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
+interface WithHideableComponentProps {
+	children: JSX.Element;
+}
 export default function withHideable(
-	WrappedComponent: React.ComponentType<WrappedComponentProps> = React.Fragment
+	WrappedComponent: React.ComponentType<WithHideableComponentProps> = React.Fragment
 ) {
 	return function Resizable({
 		children,
 		style,
-		...props
 	}: {
 		children: JSX.Element;
-		style?: {
-			[x: string]: string | number | boolean;
-		};
-		[x: string]:
-			| JSX.Element
-			| boolean
-			| string
-			| number
-			| { [x: string]: string | number | boolean }
-			| undefined;
+		style?: React.CSSProperties;
 	}) {
 		const elementRef = useRef(null);
 
@@ -44,7 +36,6 @@ export default function withHideable(
 				style={{ ...style }}
 				onPointerEnter={onMouseMove}
 				onPointerLeave={onMouseMove}
-				{...props}
 			>
 				<WrappedComponent>{children}</WrappedComponent>
 				<div hidden={hover ? false : true} onPointerDown={handleHide}>

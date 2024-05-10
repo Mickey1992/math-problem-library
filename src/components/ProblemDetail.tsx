@@ -1,7 +1,7 @@
 import localforage from "localforage";
-import ProblemText, { ProblemTextProps } from "./ProblemText";
+import ProblemText from "./ProblemText";
 import ProblemTitle from "./ProblemTitle";
-import { useLoaderData } from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 
 import classes from "./ProblemDetail.module.css";
 import { useState } from "react";
@@ -13,11 +13,12 @@ import withDraggable from "./hoc/withDraggable";
 import withHideable from "./hoc/withHideable";
 
 import useMathJax from "../hooks/useMathJax";
+import { Problem } from "./AddOriginProblem";
 
 export interface ProblemProps {
 	from: string;
 	questionNo: number;
-	problem: ProblemTextProps;
+	problem: Problem;
 	images: ArrayBuffer[];
 }
 
@@ -88,12 +89,7 @@ export default function ProblemDetail() {
 	);
 }
 
-interface Params {
-	id: string;
-}
-
-ProblemDetail.loader = async ({ params }: { params: Params }) => {
-	const problem = await localforage.getItem(params.id);
-
+ProblemDetail.loader = async ({ params }: LoaderFunctionArgs) => {
+	const problem = (await localforage.getItem(params.id!)) as ProblemProps;
 	return problem;
 };

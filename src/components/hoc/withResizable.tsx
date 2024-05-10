@@ -16,25 +16,8 @@ interface ResizeInfo {
 export default function withResizable(
 	WrappedComponent: React.ComponentType<WrappedComponentProps> = React.Fragment
 ) {
-	return function Resizable({
-		children,
-		initialSize = { width: "calc(max(20vw, 100px))", height: "auto" },
-		style,
-		...props
-	}: {
-		children: JSX.Element;
-		initialSize?: { width?: number | string; height?: number | string };
-		style?: {
-			[x: string]: string | number | boolean;
-		};
-		[x: string]:
-			| JSX.Element
-			| boolean
-			| string
-			| number
-			| { [x: string]: string | number | boolean }
-			| undefined;
-	}) {
+	return function Resizable({ children }: { children: JSX.Element }) {
+		const initialSize = { width: "calc(max(20vw, 100px))", height: "auto" };
 		const elementRef = useRef(null);
 
 		const [info, setInfo] = useState<null | ResizeInfo>(null);
@@ -112,16 +95,14 @@ export default function withResizable(
 				style={
 					info
 						? {
-								...style,
 								position: "relative",
 								width: info.width,
 								height: info.height,
 						  }
-						: { ...style, position: "relative", ...initialSize }
+						: { position: "relative", ...initialSize }
 				}
 				onPointerEnter={onHover}
 				onPointerLeave={stopHover}
-				{...props}
 			>
 				<WrappedComponent>{children}</WrappedComponent>
 

@@ -1,6 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useRef, useState, useCallback } from "react";
-import { WrappedComponentProps } from "./common";
 
 interface DragInfo {
 	left: number;
@@ -10,8 +9,12 @@ interface DragInfo {
 	dragging: boolean;
 }
 
+interface WithDraggableComponentProps {
+	style?: React.CSSProperties;
+	children: JSX.Element;
+}
 export default function withDraggable(
-	WrappedComponent: React.ComponentType<WrappedComponentProps> = React.Fragment
+	WrappedComponent: React.ComponentType<WithDraggableComponentProps>
 ) {
 	return function Draggable({
 		children,
