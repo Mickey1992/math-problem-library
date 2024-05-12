@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useCallback } from "react";
 
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 
@@ -11,6 +11,7 @@ interface ResizeInfo {
 	dragPointerX: number;
 	dragPointerY: number;
 	hover: boolean;
+	resizing: boolean;
 }
 
 export default function withResizable(
@@ -21,21 +22,7 @@ export default function withResizable(
 		const elementRef = useRef(null);
 
 		const [info, setInfo] = useState<null | ResizeInfo>(null);
-
-		useEffect(() => {
-			if (elementRef.current === null) return;
-			setInfo({
-				height: elementRef.current["offsetHeight"],
-				width: elementRef.current["offsetWidth"],
-				dragPointerX: 0,
-				dragPointerY: 0,
-				hover: false,
-			});
-
-			return () => {
-				setInfo(null);
-			};
-		}, [elementRef]);
+		const isResizing = info?.resizing ?? false;
 
 		const doResize = useCallback((event: PointerEvent) => {
 			setInfo((pre) => {
@@ -48,6 +35,7 @@ export default function withResizable(
 				const scale = (deltaX + pre.width) / pre.width;
 				return {
 					hover: true,
+					resizing: true,
 					width: pre.width + deltaX,
 					height: pre.height * scale,
 					dragPointerX: event.clientX,
@@ -57,11 +45,12 @@ export default function withResizable(
 		}, []);
 
 		const stopResize = useCallback(() => {
+			setInfo((pre) => (pre ? { ...pre, resizing: false } : pre));
 			document.removeEventListener("pointermove", doResize);
 			document.removeEventListener("pointerup", stopResize);
 		}, [doResize]);
 
-		const onResize = useCallback(
+		const onResizeStart = useCallback(
 			(event: React.PointerEvent) => {
 				event.stopPropagation();
 				setInfo((pre) =>
@@ -80,12 +69,21 @@ export default function withResizable(
 		);
 
 		const onHover = useCallback(() => {
-			setInfo((pre) => (pre ? { ...pre, hover: true } : pre));
-		}, []);
+			if (isResizing) return;
+			setInfo({
+				height: elementRef.current!["offsetHeight"],
+				width: elementRef.current!["offsetWidth"],
+				dragPointerX: 0,
+				dragPointerY: 0,
+				hover: true,
+				resizing: false,
+			});
+		}, [isResizing]);
 
 		const stopHover = useCallback(() => {
+			if (isResizing) return;
 			setInfo((pre) => (pre ? { ...pre, hover: false } : pre));
-		}, []);
+		}, [isResizing]);
 
 		if (!children) return null;
 
@@ -108,7 +106,7 @@ export default function withResizable(
 
 				<div
 					hidden={info?.hover ? false : true}
-					onPointerDown={onResize}
+					onPointerDown={onResizeStart}
 				>
 					<OpenInFullIcon
 						sx={{
