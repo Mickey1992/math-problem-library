@@ -7,7 +7,7 @@ import localforage from "localforage";
 
 import { Form, redirect } from "react-router-dom";
 
-import useMathJax from "../hooks/useMathJax";
+import useRerenderMathJax from "../hooks/useRerenderMathJax";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -62,7 +62,7 @@ export default function AddOriginProblem() {
 	const [problem, setProblem] = useState<Problem>({});
 	const [images, setImages] = useState<ArrayBuffer[]>([]);
 
-	useMathJax(problem);
+	useRerenderMathJax(problem);
 	console.log(problem);
 
 	function handleProblemTextChange(

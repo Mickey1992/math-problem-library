@@ -12,7 +12,7 @@ import withResizable from "./hoc/withResizable";
 import withDraggable from "./hoc/withDraggable";
 import withHideable from "./hoc/withHideable";
 
-import useMathJax from "../hooks/useMathJax";
+import useRerenderMathJax from "../hooks/useRerenderMathJax";
 import { Problem } from "./AddOriginProblem";
 
 export interface ProblemProps {
@@ -23,13 +23,13 @@ export interface ProblemProps {
 }
 
 export default function ProblemDetail() {
-	const { from, questionNo, problem, images }: ProblemProps =
+	const { from, questionNo, problem, images } =
 		useLoaderData() as ProblemProps;
 
-	useMathJax(problem);
+	useRerenderMathJax(problem);
 
 	const numberOfSubQuestions = problem.questions?.length || 0;
-	const allSubQuestionsIndex = Array.from(
+	const allSubQuestionIndexes = Array.from(
 		{ length: numberOfSubQuestions },
 		(_, i) => i
 	);
@@ -55,7 +55,7 @@ export default function ProblemDetail() {
 				className={classes.buttonGroup}
 				onToggle={handleClickSubQuestionNo}
 			>
-				{allSubQuestionsIndex.map((no) => (
+				{allSubQuestionIndexes.map((no) => (
 					<ToggleButton
 						className={classes.subQuestionNo}
 						select

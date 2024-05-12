@@ -8,7 +8,7 @@ interface WithHideableComponentProps {
 export default function withHideable(
 	WrappedComponent: React.ComponentType<WithHideableComponentProps> = React.Fragment
 ) {
-	return function Resizable({
+	return function Hideable({
 		children,
 		style,
 	}: {
@@ -18,11 +18,7 @@ export default function withHideable(
 		const elementRef = useRef(null);
 
 		const [hide, setHide] = useState(false);
-		const [hover, sestHover] = useState(false);
-
-		const onMouseMove = useCallback(() => {
-			sestHover((pre) => !pre);
-		}, []);
+		const [hover, setHover] = useState(false);
 
 		const handleHide = useCallback(() => {
 			setHide(true);
@@ -34,8 +30,8 @@ export default function withHideable(
 			<div
 				ref={elementRef}
 				style={{ ...style }}
-				onPointerEnter={onMouseMove}
-				onPointerLeave={onMouseMove}
+				onPointerEnter={() => setHover(true)}
+				onPointerLeave={() => setHover(false)}
 			>
 				<WrappedComponent>{children}</WrappedComponent>
 				<div hidden={hover ? false : true} onPointerDown={handleHide}>
