@@ -52,7 +52,6 @@ export default function withDraggable(
 				setInfo((pre) => ({
 					left: pre?.left || wrapperRef.current!["clientLeft"],
 					top: pre?.top || wrapperRef.current!["clientTop"],
-					hover: false,
 					dragging: true,
 					dragPointerX: event.clientX,
 					dragPointerY: event.clientY,

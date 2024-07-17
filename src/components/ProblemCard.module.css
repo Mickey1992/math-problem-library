@@ -25,7 +25,6 @@
 }
 
 .card-content {
-	display: flex;
 	padding: 10px;
 	font-size: 10px;
 }
@@ -40,14 +39,8 @@
 	padding-left: 15px;
 }
 
-.img-box {
-	position: relative;
-	/* width: calc(min(30%,20vh)); */
-	width: 30%;
-}
-
 .img-box img {
-	display: flex;
-	width: 100%;
-	height: 100%;
+	display: inline-flex;
+	max-height: 100px;
+	margin-left: 20px;
 }
