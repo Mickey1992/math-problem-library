@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 import classes from "./ProblemCard.module.css";
 
+import { blobToUrl } from "../utils/image.ts";
+
 export default function ProblemCard({
 	from,
 	questionNo,
@@ -12,16 +14,14 @@ export default function ProblemCard({
 	images,
 }: ProblemProps) {
 	const navigate = useNavigate();
-	let cardMedia = null;
-	if (images.length > 0) {
-		const blob = new Blob([images[0]]);
-		const url = URL.createObjectURL(blob);
-		cardMedia = (
-			<div className={classes["img-box"]}>
-				<img src={url} />
-			</div>
-		);
-	}
+	const cardMedia = (
+		<div className={classes["img-box"]}>
+			{images.map((arrayBuffer: ArrayBuffer) => {
+				const url = blobToUrl(arrayBuffer);
+				return <img src={url} />;
+			})}
+		</div>
+	);
 
 	function handleCLick() {
 		navigate(`/problem/${from}-${questionNo}`);

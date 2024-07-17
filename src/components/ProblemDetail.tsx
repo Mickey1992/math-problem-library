@@ -15,6 +15,8 @@ import withHideable from "./hoc/withHideable";
 import useRerenderMathJax from "../hooks/useRerenderMathJax";
 import { Problem } from "./AddOriginProblem";
 
+import { blobToUrl } from "../utils/image.ts";
+
 export interface ProblemProps {
 	from: string;
 	questionNo: number;
@@ -73,8 +75,7 @@ export default function ProblemDetail() {
 
 			<div className={classes.images}>
 				{images.map((arrayBuffer: ArrayBuffer) => {
-					const blob = new Blob([arrayBuffer]);
-					const url = URL.createObjectURL(blob);
+					const url = blobToUrl(arrayBuffer);
 					const DraggableResizable = withDraggable(
 						withHideable(withResizable())
 					);
